@@ -2,7 +2,7 @@
 # ================================= POETRY =================================
 
 [tool.poetry]
-name = "prodigy"
+name = "basic_app"
 version = "0.1.0"
 description = ""
 authors = ["Marco.Petrella <marco.petrella@ksb.ch>"]
