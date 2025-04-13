@@ -1,0 +1,86 @@
+version: "3.8"
+
+name: prodigy
+
+services:
+  database:
+    container_name: database
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 3s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: "always"
+    networks:
+      - backend-network
+
+  init:
+    container_name: init
+    build:
+      context: ./
+      dockerfile: backend/init.Dockerfile
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: "no"
+    networks:
+      - backend-network
+
+  backend:
+    container_name: backend
+    build:
+      context: ./
+      dockerfile: backend/backend.Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./backend:/app/backend
+    restart: "always"
+    depends_on:
+      - database
+    networks:
+      - backend-network
+      - frontend-network
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    restart: "always"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
+    networks:
+      - frontend-network
+
+volumes:
+  postgres_data:
+
+networks:
+  backend-network:
+  frontend-network:

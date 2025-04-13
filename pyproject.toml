@@ -1,0 +1,55 @@
+
+# ================================= POETRY =================================
+
+[tool.poetry]
+name = "prodigy"
+version = "0.1.0"
+description = ""
+authors = ["Marco.Petrella <marco.petrella@ksb.ch>"]
+readme = "README.md"
+packages = [
+    { include = "backend", from = "." }
+]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+uvicorn = "^0.32.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.7.1"
+pre-commit = "^4.0.1"
+
+[build-system]
+requires = ["poetry-core==1.9.0"]
+build-backend = "poetry.core.masonry.api"
+
+[virtualenvs]
+in-project = true
+prompt = "prodigy"
+
+# ================================= RUFF =================================
+
+[tool.ruff]
+preview = true
+target-version = "py311"
+exclude = ["frontend"]
+
+[tool.ruff.format]
+skip-magic-trailing-comma = true
+
+[tool.ruff.lint]
+dummy-variable-rgx = "^_$"
+ignore = [
+    "CPY001",  # flake8-copyright
+    "D1",      # undocumented-*
+    "D203",    # one-blank-line-before-class
+    "D213",    # multi-line-summary-second-line
+    "E501",    # line-too-long
+    "BLE001",  # catch-blind-exceptions
+    "COM812",  # missing-trailing-commas
+    "PLR0917", # too-many-positional-arguments
+]
+select = ["ALL"]
+[tool.ruff.lint.per-file-ignores]
+"backend/database.py" = ["S101"]

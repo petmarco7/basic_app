@@ -1,0 +1,60 @@
+.word {
+  cursor: pointer;
+  padding: 5px;
+}
+
+.selected {
+  background-color: yellow;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow effect */
+  border-radius: 3px; /* Optional: smooth corners for a nicer look */
+  color: white;
+}
+
+.person {
+  background-color: #4CAF50;
+}
+
+.organization {
+  background-color: #008CBA;
+}
+
+.word:hover {
+  background-color: #f9c16d;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.label-button {
+  padding: 10px;
+  margin-right: 10px;
+  background-color: lightgray;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  box-shadow: 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+#person-button {
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
+#organization-button {
+  background-color: #008CBA; /* Blue */
+  color: white;
+}
+
+.label-button.active {
+  color: white;
+  border-color: #02070c;
+  box-shadow: 0px;
+
+}
+
+.label-button:hover {
+  background-color: #0056b3;
+  color: white;
+}
